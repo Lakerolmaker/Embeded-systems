@@ -28,15 +28,35 @@ char getTrans(int i){
     return table2[i];
 }
 
-char toUpperCase(char letter) {
-    return letter-32;
+char toLowerCase(char letter) {
+    return letter + 32;
 }
 
-int isLower(char letter){
-    if (letter >= 'A' && letter <= 'Z'){
-        return 0;
-    }else{
+char toUpperCase(char letter) {
+    return letter - 32;
+}
+
+int isLowerCase(char letter){
+    if (letter >= 'a' && letter <= 'z'){
         return 1;
+    }else{
+        return 0;
+    }
+}
+
+int isUpperCase(char letter){
+    if (letter >= 'A' && letter <= 'Z'){
+        return 1;
+    }else{
+        return 0;
+    }
+}
+
+int isInAlphabet(char letter){
+    if(isUpperCase(letter) == 1 || isLowerCase(letter) == 1){
+        return 1;
+    }else{
+        return 0;
     }
 }
 
@@ -52,14 +72,16 @@ int main(void) {
 
     int i;
     for (i = 0; original_word[i] != '\0' ; i++) {
-            int index = getIndex(original_word[i]);
-            if(index != 1000){
-                encrypted = getTrans(index);
-                if (isLower(original_word[i]) == 1) {
-                    new_word[i] = encrypted;
-                } else {
-                    new_word[i] = toUpperCase(encrypted);
+            if(isInAlphabet(original_word[i])){
+                char letter = original_word[i];
+                if(isUpperCase(letter) == 1){
+                    letter = toLowerCase(letter);
                 }
+                encrypted = getTrans(getIndex(letter));
+                if (isUpperCase(original_word[i]) == 1) {
+                    encrypted = toUpperCase(encrypted);
+                }
+                new_word[i] = encrypted;
             }
     }
     print(new_word);
