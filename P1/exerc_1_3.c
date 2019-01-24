@@ -72,6 +72,7 @@ int main(void) {
 
     int i;
     for (i = 0; original_word[i] != '\0' ; i++) {
+            //: checks if the word is in the alhpabet
             if(isInAlphabet(original_word[i])){
                 char letter = original_word[i];
                 if(isUpperCase(letter) == 1){
