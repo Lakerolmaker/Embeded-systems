@@ -23,7 +23,7 @@ int main(void){
   for(i = 0; i < MAX; i++){
     array[i] = random_number(1,99);
   }
-  
+
   printf("The value of the label array( address ) is: %p \n", &array);
   printf("First integer in the array is ( array[0] ) is : %d \n", array[0]);
   printf("The size of an integer (number of bytes) is : %ld \n", sizeof(array));
