@@ -7,6 +7,7 @@ void readPersnr( char *person){
     scanf("%[^\n]%*c", person);
 }
 
+//: Algoritm for the lohm algortim , found online
 int controlDigit( const char * persnr ){
     int nDigits = strlen(persnr);
     int nSum = 0, isSecond = 0;

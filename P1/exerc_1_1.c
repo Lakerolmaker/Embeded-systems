@@ -13,19 +13,19 @@ int main(void){
         scanf("%d", &a);
         switch (a) {
           case 1:
-            printf("smolgay\n");
+            printf("option 1\n");
             break;
           case 2:
-            printf("biggay2\n");
+            printf("option 2\n");
             break;
           case 3:
-            printf("biggay3\n");
+            printf("option 3\n");
             break;
           case 4:
-            printf("biggay4\n");
+            printf("option 4\n");
             break;
           case 5:
-            printf("biggay5\n");
+            printf("option 5\n");
             break;
         default:
             return 1;
