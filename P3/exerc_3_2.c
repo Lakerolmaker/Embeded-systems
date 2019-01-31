@@ -2,95 +2,33 @@
 #include <stdlib.h>
 #include <string.h>
 
-enum DIRECTION {N,E,S,W};
-enum boolean {true, false};
-
-#define WIDTH 99
-#define HEIGHT 99
-
-typedef struct {
-  int x;
-  int y;
-  enum DIRECTION dir;
-} ROBOT;
-
-void turn(ROBOT *rob){
-  switch(rob->dir){
-    case N:
-      rob->dir = E;
-    break;
-    case E:
-      rob->dir = S;
-    break;
-    case S:
-      rob->dir = W;
-    break;
-    case W:
-      rob->dir = N;
-    break;
-  }
-}
-
-void move(ROBOT *rob){
-  int x = rob->x;
-  int y = rob->y;
+#define NELEMS(x)  (sizeof(x) / sizeof((x)[0]))
 
 
-  switch(rob->dir){
-    case N:
-      if(y > 0)
-        rob->y--;
-    break;
-    case S:
-      if(y < HEIGHT)
-        rob->y++;
-    break;
-    case W:
-      if(x > 0)
-        rob->x--;
-    break;
-    case E:
-      if(x < WIDTH)
-        rob->x++;
-    break;
+int search_number( int number, int *tab , int size){
+  int *ptr = tab;
+  int i = 0;
+  for(; ptr < &tab[size];){
+    printf("number at %d is %d \n" , i , *ptr);
+    if(*ptr == number){
+      return i;
+    }
+
+    i++;
+    ptr++;
   }
 
-
-}
-
-
+  return -1;
+};
 
 int main(int argc, char *argv[]){
 
-  char directions[4] = {'N','E','S','W'};
+int test [] = { 1,2,34,5,67,3,23,12,13,10};
 
-  ROBOT *robot = (ROBOT*)malloc(sizeof(ROBOT));
-  robot->dir = N;
-  robot->x = 0;
-  robot->y = 0;
+int search_for = 13;
+int index = search_number(search_for ,test , NELEMS(test));
 
-
-  char command[255];
-  printf("ROBOT simulator V1.0 \n");
-  LOOP:;
-  int x = robot->x;
-  int y = robot->y;
-  char dir = directions[robot->dir];
-  printf("Robots position : X%d , Y%d , Facing %c \n",x ,y, dir);
-  printf("Input command for robot: (m/t) , press (Q to exit): ");
-  scanf("%[^\n]%*c", command);
-
-  int i;
-  for(i = 0; i < strlen(command); i++){
-      if(command[i] == 'm')
-        move(robot);
-      else if(command[i] == 't')
-        turn(robot);
-      else if(command[i] == 'q' || command[i] == 'Q')
-        goto END;
-  }
-  goto LOOP;
-  END:;
+printf("First instance of number %d is index %d \n" , search_for , index );
 
 
 }
