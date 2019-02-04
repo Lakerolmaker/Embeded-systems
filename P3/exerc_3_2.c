@@ -31,7 +31,7 @@ void selectionSort(int *array , int size){
   for(;ptr1 < &array[size]; ptr1++){
     int *ptr2 = ptr1;
     for(;ptr2 < &array[size];ptr2++){
-      if( *ptr1 > *ptr2 ){
+      if(*ptr1 > *ptr2){
         swap(ptr1 , ptr2);
       }
     }
