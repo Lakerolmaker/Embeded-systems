@@ -21,8 +21,7 @@ void input( int *list, int number, int max) {
         }else if (count == max) {
             printf("im full");
         }
-        else
-        {break;}
+        else{break;}
     }
 
     list[count] = number;
@@ -58,14 +57,8 @@ int que[5];
 
 initQue(que, 5);
 printArray(que, 5);
-//check(&que);
 input(que, 2, 5);
-    printArray(que, 5);
-
+printArray(que, 5);
 output(que, 5);
-
-
-
-
 
 }

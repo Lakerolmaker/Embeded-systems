@@ -38,7 +38,7 @@ void draw_histogram(int *freq ){
     }
 }
 
-int main ( void){
+int main (void){
 srand(time(0));
 int table[MAX], n ;
 int frequency[MAXNUMBER];
