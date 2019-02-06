@@ -16,11 +16,11 @@ int main() {
 
         for (i; i<middle; i++ ) {
             if (input[i] != input[end])
-            {printf("woopsie"); break;}
+            {printf("It´s not a palindrome"); break;}
             end--;
         }
         //once you reach the middle
         if (i == middle)
-        { printf("yay");}
+        { printf("It´s a palindrome");}
     }
 
