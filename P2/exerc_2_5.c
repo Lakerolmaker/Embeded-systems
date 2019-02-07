@@ -14,6 +14,8 @@ void create_random( int *tab ){
         tab[i] = random_number(0 , MAXNUMBER);
     }
 }
+
+//for each number in the table, add a counter correspondent to that number in the table
 void count_frequency(int *tab, int *freq ){
     int i;
     int z;
@@ -25,7 +27,7 @@ void count_frequency(int *tab, int *freq ){
         }
     }
 }
-
+//by passing frequency, depending on the count, draw that amount of Xs for each number
 void draw_histogram(int *freq ){
     int i;
     for(i = 0; i < MAXNUMBER + 1; i++){
