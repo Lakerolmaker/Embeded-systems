@@ -3,7 +3,7 @@
 #include<string.h>
 
 
-
+//set everything in list to -1
 void initQue (int *list, int max) {
     int i = 0;
     for (; i<list[max]; i++) {
@@ -11,7 +11,7 @@ void initQue (int *list, int max) {
     }
 
 }
-
+//check if full, if not full just count, finally put the number
 void input( int *list, int number, int max) {
     int count=0;
     int i = 0;
@@ -26,7 +26,7 @@ void input( int *list, int number, int max) {
 
     list[count] = number;
 }
-
+//if its empty, print that its empty otherwise print everything
 void output(int *list, int max) {
     int count = 0;
     int i = 0;
@@ -42,7 +42,7 @@ void output(int *list, int max) {
         printf("izempty");
     }
 }
-
+//test print
 void printArray(int *array, int size){
     printf("Array : ");
     int *ptr = array;
