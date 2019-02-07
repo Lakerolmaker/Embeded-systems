@@ -5,7 +5,7 @@
 
 int main() {
    
-
+      //ask for palindrome
         char input[255];
         printf("insert palindrome");
         scanf("%s", &input);
@@ -13,7 +13,7 @@ int main() {
         int end = strlen(input) - 1;
         int middle = strlen(input)/2;
         int i = 0;
-
+      //check if its the same until the middle is reached (abba, check if ab and ba flipped is same)
         for (i; i<middle; i++ ) {
             if (input[i] != input[end])
             {printf("It´s not a palindrome"); break;}
