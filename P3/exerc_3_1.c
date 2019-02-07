@@ -9,7 +9,7 @@ enum boolean {true, false};
 #define HEIGHT 99
 
 typedef struct {
-  int x;
+int x;
   int y;
   enum DIRECTION dir;
 } ROBOT;
@@ -57,8 +57,6 @@ void move(ROBOT *rob){
 
 
 }
-
-
 
 int main(int argc, char *argv[]){
 

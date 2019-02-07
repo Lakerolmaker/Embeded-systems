@@ -1,3 +1,6 @@
+// passed 7717
+//: vinny said it as okay.
+
 #include<stdlib.h>
 #include<stdio.h>
 #include<string.h>
@@ -60,5 +63,7 @@ printArray(que, 5);
 input(que, 2, 5);
 printArray(que, 5);
 output(que, 5);
+printArray(que, 5);
+
 
 }

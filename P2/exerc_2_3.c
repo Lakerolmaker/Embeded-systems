@@ -1,11 +1,13 @@
+//: Passed 7022
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-//iterate through 2 pointers associated with the strings and check if char is same
+//iterate through arrays associated with the strings and check if char is same
 int isSame(char *str1 , char *str2){
   int i;
-  for(i = 1; i < strlen(str1); i++){
+  for(i = 0; i < strlen(str1); i++){
     if(str1[i] != str2[i]){
       return 0;
     }

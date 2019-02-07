@@ -1,3 +1,5 @@
+//: passed 7171
+
 /*
  *  File    : nim.c
  *  Program : Nim game

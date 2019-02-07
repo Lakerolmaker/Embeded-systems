@@ -1,3 +1,4 @@
+// passed 7511
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -16,12 +17,12 @@ void create_random( int *tab ){
 }
 
 //for each number in the table, add a counter correspondent to that number in the table
-void count_frequency(int *tab, int *freq ){
+void count_frequency(int *tab, int *freq){
     int i;
     int z;
-    for(i = 0; i < MAX; i++){
+    for(i = 0; i < MAXNUMBER; i++){
         for(z = 0; z < MAX; z++){
-            if(tab[i] == tab[z]){
+            if(i == tab[z]){
                 freq[tab[i]]++;
             }
         }
@@ -29,15 +30,18 @@ void count_frequency(int *tab, int *freq ){
 }
 //by passing frequency, depending on the count, draw that amount of Xs for each number
 void draw_histogram(int *freq ){
+    int number = 0;
     int i;
-    for(i = 0; i < MAXNUMBER + 1; i++){
-        printf("%d " , i);
-        int z;
-        for(z = 0; z < freq[i]; z++){
+    for(i = 0; i < MAXNUMBER; i++){
+        printf("%d" , i);
+        int z = 0;
+        for(; z < freq[i]; z++){
             printf("X");
+            number++;
         }
         printf("\n");
     }
+    printf("Number of numbers : %d \n" , number);
 }
 
 int main (void){
