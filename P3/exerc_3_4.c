@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 
 #define NELEMS(x)  (sizeof(x) / sizeof((x)[0]))
-
+char db_name[100] = "";
 
 typedef struct {
  char firstname[20];
@@ -42,20 +43,9 @@ PERSON* add_person(void){
 
   return create_person(name, famname, personnumber);
 }
- // Reads in a person record.
-void write_new_file( PERSON *inrecord); //Creats a file and write a first record
-void printfile(void); // print out all persons in the file
-void search_by_firstname( char *name);// print out person if in list
-
-
-//1 Create a new and delete the old file.
-//2 Add a new person to the file.
-//3 Search for a person in the file .
-//4 Print out all in the file.
-//5 Exit the program.
 
 void printMenu(){
-printf("\n");
+ printf("\n");
  printf("--------------------------------\n");
  printf("--       Person database      --\n");
  printf("--            -----           --\n");
@@ -83,19 +73,58 @@ void printAll(PERSON **database, int size){
   }
 }
 
+void printArray(char *array, int size){
+    printf("Array : ");
+    char *ptr = array;
+    for(;ptr < &array[size]; ptr++){
+        printf("%c", *ptr);
+    }
+    printf("\n");
+}
+
 // appends a new person to the file
 void append_file(PERSON *person){
+
   FILE *fp;
-  fp = fopen ("database.txt","w+");
+  fp = fopen (db_name,"a");
   if (fp!=NULL){
-    fwrite(person, sizeof(PERSON), 1, fp);
+    fwrite (person, sizeof(PERSON), 1, fp);
     fclose (fp);
   }
 }
 
+int file_exist(char *filename){
+  FILE *file;
+    if((file = fopen(filename,"r"))!=NULL){
+      fclose(file);
+      return 1;
+    }else{
+      return 0;
+    }
+}
+
+int database_exists(){
+  if(file_exist(db_name)){
+    return 1;
+  }else{
+    return 0;
+  }
+}
+
 void createDatabase(){
+
+  while(1){
+    printf("Input the name of the new Database : ");
+    scanf("%s", db_name);
+    if(database_exists()){
+      printf("Database allready exists \n");
+    }else{
+      break;
+    }
+  }
+
   FILE *fp;
-  fp = fopen("database.txt","w+");
+  fp = fopen(db_name,"wb");
   if (fp!=NULL){
     fprintf(fp,"");
     fclose (fp);
@@ -105,35 +134,81 @@ void createDatabase(){
   }
 }
 
-void readDatabase(PERSON **database){
+void readDatabase(PERSON **database , int *index){
 
   printf("Reading Database \n");
 
-  PERSON **buffer = malloc(10 * sizeof(PERSON));
-
-  FILE *fp= fopen("database.txt", "w+");
-
-  fseek(fp, 0L, SEEK_END);
-  int size = ftell(fp);
+  //: code for seeking thru the file to get it's size
+  FILE *seeker= fopen(db_name, "rb");
+  fseek(seeker, 0L, SEEK_END);
+  int size = ftell(seeker);
   int nr_object = size / 53;
+  *index = nr_object;
 
   printf("%d persons found in database \n" , nr_object);
 
-  if (fp != NULL) {
-      fread(buffer, sizeof(PERSON), nr_object, fp);
-      fclose(fp);
-  }
 
-  printAll(buffer ,NELEMS(buffer) );
-  //database = buffer;
+  FILE *fp= fopen(db_name, "rb");
+
+  static PERSON pers;
+  int i = 0;
+  if (fp != NULL) {
+    while(fread(&pers, sizeof(PERSON), 1, fp)){
+      database[i] = create_person(pers.firstname , pers.famnamne , pers.pers_number)
+;
+      i++;
+    }
+    fclose(fp);
+  }
+}
+
+void clearDB(PERSON **database){
+  memset(database, 0, 10 * sizeof(database));
+}
+
+void findPerson(PERSON **database , int size){
+    printf("First name / Family name of person : ");
+    char input[13];
+    scanf("%s" , input);
+
+
+    printf("People with that name : \n");
+    int i = 0;
+    for(; i < size; i++){
+      char *firstname = database[i]->firstname;
+      char *famnamne = database[i]->famnamne;
+
+      if(!strcmp( input, firstname) || !strcmp( input, famnamne)){
+          printPerson(database[i]);
+      }
+    }
+}
+
+void startup(PERSON **database , int *index){
+  printf("Person database V.1.0 \n");
+  printf("Do you wish to open a created database (y/n) : " );
+  char input;
+  scanf("%c" , &input);
+  if(input == 'y' || input == 'Y'){
+    printf("Input the name of the database to access : ");
+    scanf("%s" , db_name);
+    //: Reads the database from file
+    readDatabase(database , index);
+  }
+}
+
+
+void noDB(){
+  printf("Error : No Database detected. \n");
 }
 
 int main(int argc, char *argv[]){
 
-  //: Intilizes the array.
+  //: Intilizes the array. with all objects being 0
   PERSON *database[10] = { 0 };
+  int index = 0;
 
-  readDatabase(database);
+  startup(database, &index);
 
   while(1){
 
@@ -144,16 +219,34 @@ int main(int argc, char *argv[]){
 
       switch (a) {
         case 1:
+          clearDB(database);
           createDatabase();
         break;
         case 2:
-          database[0] = add_person();
-          append_file(database[0]);
+          if(database_exists()){
+            database[index] = add_person();
+            append_file(database[index]);
+            index++;
+          }else{
+            noDB();
+            break;
+          }
         break;
         case 3:
+          if(database_exists()){
+            findPerson(database , index);
+          }else{
+            noDB();
+            break;
+          }
         break;
         case 4:
-          printAll(database , NELEMS(database));
+          if(database_exists()){
+            printAll(database , NELEMS(database));
+          }else{
+            noDB();
+            break;
+          }
         break;
         case 5:
           return 0;
