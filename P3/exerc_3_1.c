@@ -5,15 +5,18 @@
 enum DIRECTION {N,E,S,W};
 enum boolean {true, false};
 
+//maximums
 #define WIDTH 99
 #define HEIGHT 99
 
+//constructor for robot
 typedef struct {
 int x;
   int y;
   enum DIRECTION dir;
 } ROBOT;
 
+//turn function, switch case based on current position
 void turn(ROBOT *rob){
   switch(rob->dir){
     case N:
@@ -31,6 +34,8 @@ void turn(ROBOT *rob){
   }
 }
 
+
+//move function, move one step depending on position, constrained
 void move(ROBOT *rob){
   int x = rob->x;
   int y = rob->y;
@@ -61,13 +66,13 @@ void move(ROBOT *rob){
 int main(int argc, char *argv[]){
 
   char directions[4] = {'N','E','S','W'};
-
+  //initialize robot, allocate memory for it
   ROBOT *robot = (ROBOT*)malloc(sizeof(ROBOT));
   robot->dir = N;
   robot->x = 0;
   robot->y = 0;
 
-
+  //initialize "program", take input in loop
   char command[255];
   printf("ROBOT simulator V1.0 \n");
   LOOP:;
@@ -77,7 +82,7 @@ int main(int argc, char *argv[]){
   printf("Robots position : X%d , Y%d , Facing %c \n",x ,y, dir);
   printf("Input command for robot: (m/t) , press (Q to exit): ");
   scanf("%[^\n]%*c", command);
-
+//execute command
   int i;
   for(i = 0; i < strlen(command); i++){
       if(command[i] == 'm')
