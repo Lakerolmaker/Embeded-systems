@@ -1,3 +1,14 @@
+// ====================================
+// File name: exerc_3_5.c (or cpp)
+// Date: 2019-02-11
+// Group Number: 21
+// Members That contributed:
+// Jacob Olsson
+// Victor Roman
+// Members not present at the demonstration :
+// Xxxxxxx
+// Demonstration code: [<Ass code 29462> ]
+// ======================================
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

@@ -1,9 +1,19 @@
+// ====================================
+// File name: exerc_3_2.c (or cpp)
+// Date: 2019-02-4
+// Group Number: 21
+// Members That contributed:
+// Jacob Olsson
+// Victor Roman
+// Members not present at the demonstration :
+// Xxxxxxx
+// Demonstration code: [<Ass code 29514> ]
+// ======================================
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #define NELEMS(x)  (sizeof(x) / sizeof((x)[0]))
-
 
 int search_number( int number, int *tab , int size){
   int *ptr = tab;
