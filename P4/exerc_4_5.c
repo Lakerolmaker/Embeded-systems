@@ -8,7 +8,6 @@ long first = 0;
 long second = 0;
 double total = 0;
 
-char customKey;
 const byte ROWS = 4;
 const byte COLS = 4;
 
@@ -26,40 +25,16 @@ Keypad customKeypad = Keypad( makeKeymap(keys), rowPins, colPins, ROWS, COLS);
 
 void setup()
 {
-lcd.begin(16, 2);               // start lcd
-
+lcd.begin(16, 2);
 lcd.clear();
 lcd.setCursor(0, 0);
-lcd.print('h');
 }
 
-
-void loop()
-{
+char customKey;
+void loop(){
 
   customKey = customKeypad.getKey();
-  switch(customKey){
-  case '':
-  break;
-  case '1':
-    lcd.print(1);
-  break;
-  case 'B':
-    lcd.print("B");
-  break;
-  case 'C':
-    lcd.print("C");
-  break;
-  case 'D':
-    lcd.print("D");
-  break;
-  case '*':
-    lcd.print("*");
-  break;
-  case '#':
-    lcd.print("#");
-  break;
-
-}
-
+  if(customKey != 0){
+    lcd.print(customKey);
+  }
 }

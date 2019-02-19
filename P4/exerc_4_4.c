@@ -4,8 +4,6 @@ Peter Lundin / 2016-01-97
 For test IO program function
 
 ******************************** */
-
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
