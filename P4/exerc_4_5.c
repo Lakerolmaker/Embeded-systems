@@ -1,12 +1,7 @@
-#include <Keypad.h>
 #include <Wire.h>
 #include <LiquidCrystal.h>
 
 LiquidCrystal lcd(13, 12, 11, 10, 9, 8);
-
-long first = 0;
-long second = 0;
-double total = 0;
 
 const byte ROWS = 4;
 const byte COLS = 4;
@@ -17,24 +12,62 @@ char keys[ROWS][COLS] = {
   {'7','8','9','C'},
   {'*','0','#','D'}
 };
-byte rowPins[ROWS] = {7,6,5,4}; //connect to the row pinouts of the keypad
-byte colPins[COLS] = {3,2,1,0}; //connect to the column pinouts of the keypad
 
-//initialize an instance of class NewKeypad
-Keypad customKeypad = Keypad( makeKeymap(keys), rowPins, colPins, ROWS, COLS);
+byte rowPins[ROWS] = {7,6,5,4};
+byte colPins[COLS] = {3,2,1,0};
 
-void setup()
-{
+//: Set's all collums exept one to HIGH
+void setCol(int col_num){
+  for(int x = 0; x < COLS; x++){
+    if(x == col_num)
+      digitalWrite(rowPins[x],LOW);
+    else
+      digitalWrite(rowPins[x],HIGH);
+  }
+}
+
+//: Get's the char for the corresponding key.
+char read_key(){
+ //: Loop thur all the rows chaning one to low incramentally.
+ for(int y = 0;y < ROWS;y++){
+   //: Sets all rows exept for one to HIGH
+   setCol(y);
+   for(int x = 0; x < COLS; x++){
+     //: checks for the one key that collum that is off. which signa
+     if(digitalRead(colPins[x]) == 0)
+       return keys[y][x];
+   }
+ }
+ //: Returns 0 if no key was found
+ return 0;
+}
+
+//: Setup for the ports.
+void resetKeys(){
+  for(int i = 0; i < ROWS; i++){
+   pinMode(rowPins[i],OUTPUT);
+   digitalWrite(rowPins[i],HIGH);
+  }
+  for(int i = 0; i < ROWS; i++){
+    pinMode(colPins[i],INPUT_PULLUP);
+  }
+}
+
+//: Setup
+void setup(){
 lcd.begin(16, 2);
 lcd.clear();
 lcd.setCursor(0, 0);
+resetKeys();
 }
 
+//: char for storing the char.
 char customKey;
-void loop(){
 
-  customKey = customKeypad.getKey();
-  if(customKey != 0){
+//: The loop, runns evey milisecond.
+void loop(){
+   delay(1000);
+   customKey = read_key();
+   if(customKey != 0)
     lcd.print(customKey);
-  }
 }
