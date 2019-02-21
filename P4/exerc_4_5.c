@@ -1,73 +1,134 @@
-#include <Wire.h>
+// code : 21917
 #include <LiquidCrystal.h>
 
 LiquidCrystal lcd(13, 12, 11, 10, 9, 8);
 
-const byte ROWS = 4;
-const byte COLS = 4;
+unsigned char *portDDRD;
+unsigned char *portwrite;
+unsigned char *portread;
 
-char keys[ROWS][COLS] = {
-  {'1','2','3','A'},
-  {'4','5','6','B'},
-  {'7','8','9','C'},
-  {'*','0','#','D'}
-};
-
-byte rowPins[ROWS] = {7,6,5,4};
-byte colPins[COLS] = {3,2,1,0};
-
-//: Set's all collums exept one to HIGH
-void setCol(int col_num){
-  for(int x = 0; x < COLS; x++){
-    if(x == col_num)
-      digitalWrite(rowPins[x],LOW);
-    else
-      digitalWrite(rowPins[x],HIGH);
-  }
+void portSetup(){
+portDDRD=(unsigned char *)0x2a;
+portwrite=(unsigned char *)0x2b;
+portread=(unsigned char *)0x29;
+*portDDRD  = B11110000;
 }
 
-//: Get's the char for the corresponding key.
-char read_key(){
- //: Loop thur all the rows chaning one to low incramentally.
- for(int y = 0;y < ROWS;y++){
-   //: Sets all rows exept for one to HIGH
-   setCol(y);
-   for(int x = 0; x < COLS; x++){
-     //: checks for the one key that collum that is off. which signa
-     if(digitalRead(colPins[x]) == 0)
-       return keys[y][x];
-   }
- }
- //: Returns 0 if no key was found
- return 0;
-}
-
-//: Setup for the ports.
-void resetKeys(){
-  for(int i = 0; i < ROWS; i++){
-   pinMode(rowPins[i],OUTPUT);
-   digitalWrite(rowPins[i],HIGH);
-  }
-  for(int i = 0; i < ROWS; i++){
-    pinMode(colPins[i],INPUT_PULLUP);
-  }
-}
-
-//: Setup
 void setup(){
 lcd.begin(16, 2);
 lcd.clear();
 lcd.setCursor(0, 0);
-resetKeys();
+portSetup();
 }
 
-//: char for storing the char.
-char customKey;
+void firstRow(){
+
+  *portwrite = B01110000;
+  if(*portread == B01110001 || *portread == B01110000){
+    *portDDRD  = B00001111;
+
+    *portwrite = B00001000;
+    if(*portread == B11111000)
+      lcd.print('0');
+
+    *portwrite = B00000100;
+    if(*portread == B11110100)
+      lcd.print('1');
+
+    *portwrite = B00000010;
+    if(*portread == B11110010)
+      lcd.print('2');
+
+    *portwrite = B00000001;
+    if(*portread == B11110001)
+      lcd.print('3');
+  }
+  *portDDRD  = B11110000;
+}
+
+void secondRow(){
+
+  *portwrite = B10110000;
+  if(*portread == B10110001 || *portread == B10110000){
+    *portDDRD  = B00001111;
+
+    *portwrite = B00001000;
+    if(*portread == B11111000)
+      lcd.print('4');
+
+    *portwrite = B00000100;
+    if(*portread == B11110100)
+      lcd.print('5');
+
+    *portwrite = B00000010;
+    if(*portread == B11110010)
+      lcd.print('6');
+
+    *portwrite = B00000001;
+    if(*portread == B11110001)
+      lcd.print('7');
+  }
+  *portDDRD  = B11110000;
+}
+
+void thirdRow(){
+
+  *portwrite = B11010000;
+  if(*portread == B11010001 || *portread == B11010000){
+    *portDDRD  = B00001111;
+
+    *portwrite = B00001000;
+    if(*portread == B11111000)
+      lcd.print('8');
+
+    *portwrite = B00000100;
+    if(*portread == B11110100)
+      lcd.print('9');
+
+    *portwrite = B00000010;
+    if(*portread == B11110010)
+      lcd.print('A');
+
+    *portwrite = B00000001;
+    if(*portread == B11110001)
+      lcd.print('B');
+  }
+  *portDDRD  = B11110000;
+}
+
+void fourthRow(){
+
+  *portwrite = B11100000;
+  if(*portread == B11100001 || *portread == B11100000){
+    *portDDRD  = B00001111;
+
+    *portwrite = B00001000;
+    if(*portread == B11111000)
+      lcd.print('C');
+
+    *portwrite = B00000100;
+    if(*portread == B11110100)
+      lcd.print('D');
+
+    *portwrite = B00000010;
+    if(*portread == B11110010)
+      lcd.print('E');
+
+    *portwrite = B00000001;
+    if(*portread == B11110001)
+      lcd.print('F');
+  }
+  *portDDRD  = B11110000;
+}
 
 //: The loop, runns evey milisecond.
 void loop(){
+
    delay(1000);
-   customKey = read_key();
-   if(customKey != 0)
-    lcd.print(customKey);
+
+   firstRow();
+   secondRow();
+   thirdRow();
+   fourthRow();
+
 }

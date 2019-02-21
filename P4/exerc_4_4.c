@@ -2,8 +2,9 @@
 Program file : bit_manage_function.c
 Peter Lundin / 2016-01-97
 For test IO program function
-
+//code 7505
 ******************************** */
+//: code
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -20,6 +21,14 @@ typedef enum {ERROR = -1, FALSE, TRUE} LOGICAL;
 #define BIT_CHECK(a,b) BOOL((a) & (1L << (b)))
 
 #define NELEMS(x)  (sizeof(x) / sizeof((x)[0]))
+
+
+void setBit(int *bits, int index, int b){
+    if(b)
+        BIT_SET(*bits, index);
+    else
+        BIT_CLEAR(*bits, index);
+}
 
 
 void sleep( int milisecond){
@@ -93,13 +102,14 @@ void printKey(int value){
 	if(BIT_CHECK(value, 6) == 0){
 		int a = 0;
 
-		int i = 0;
-		for(;i < 4;i++)
-			BIT_SET(a,BIT_CHECK(a,i));
+		for(int i = 0;i < 4;i++)
+			setBit(&a, i, BIT_CHECK(value,i));
 
-    char arr[100];
-    intToHex(value , 16, ' ', arr);
-    printf("%s  , %d key pressed \n" ,arr , value );
+      if(a <= 15){
+        char arr[100];
+        intToHex(a , 16, ' ', arr);
+        printf("%s  , %d key pressed \n" ,arr , a );
+      }
 
 	}
 
@@ -112,6 +122,7 @@ int main(){
 	int nr = 0;
 	for (;nr < 10;nr++){
 	   port = random_inport();
+     printport(port);
 	   printKey(port);
 	   sleep(500);
 	}
