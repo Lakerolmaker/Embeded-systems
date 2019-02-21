@@ -82,6 +82,11 @@ void intToHex(int num, int base, char sign, char *outbuf){
 
 }
 
+void terminate(){
+  printf("Wrong arguments or exceeded values");
+  exit(1);
+}
+
 int main(int argc, char *argv[]){
 
     char bits;
@@ -91,32 +96,42 @@ int main(int argc, char *argv[]){
     int four = getInt(argv[4]);
     int five = getInt(argv[5]);
 
+
 //    int one = 1;
 //    int two = 1;
 //    int three = 2;
 //    int four = 2;
 //    int five = 1;
 
+  if (one+two+three+four+five>9 || argc > 6) {
+    printf("Wrong arguments or exceeded values");
+    exit(1);
 
+  }
     if(one < 2){
         setBit(&bits , 0 , BIT_CHECK(one ,0));
     }
+    else {terminate();;}
     if(two < 2){
         setBit(&bits , 1 , BIT_CHECK(two ,0));
     }
+    else {terminate();}
     if(three < 3){
         setBit(&bits , 2 , BIT_CHECK(three ,0));
         setBit(&bits , 3 , BIT_CHECK(three ,1));
     }
+    else{terminate();}
     if(four < 5){
         setBit(&bits , 4 , BIT_CHECK(four ,0));
         setBit(&bits , 5 , BIT_CHECK(four ,1));
         setBit(&bits , 6 , BIT_CHECK(four ,2));
     }
+    else {terminate();}
     if(five < 2)
     {
         setBit(&bits , 7 , BIT_CHECK(five ,0));
     }
+    else {terminate();}
 
 
     char arr[100];
