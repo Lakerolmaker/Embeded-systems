@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-
+// 25967
 typedef enum {ERROR = -1, FALSE, TRUE} LOGICAL;
 
 #define BOOL(x) (!(!(x)))
