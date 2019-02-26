@@ -1,7 +1,19 @@
+// ====================================
+// File name: exerc_4_2.c (or cpp)
+// Date: 2019-02-20
+// Group Number: 21
+// Members That contributed:
+// Jacob Olsson
+// Victor Roman
+// Members not present at the demonstration :
+// Xxxxxxx
+// Demonstration code: [<Ass code 26051> ]
+// ======================================
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-// 26051
+
+
 typedef enum {ERROR = -1, FALSE, TRUE} LOGICAL;
 
 #define BOOL(x) (!(!(x)))

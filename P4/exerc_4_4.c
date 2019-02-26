@@ -1,8 +1,19 @@
+// ====================================
+// File name: exerc_4_4.c (or cpp)
+// Date: 2019-02-20
+// Group Number: 21
+// Members That contributed:
+// Jacob Olsson
+// Victor Roman
+// Members not present at the demonstration :
+// Xxxxxxx
+// Demonstration code: [<Ass code 7505> ]
+// ======================================
+
 /* *******************************
 Program file : bit_manage_function.c
 Peter Lundin / 2016-01-97
 For test IO program function
-//code 7505
 ******************************** */
 //: code
 #include <stdio.h>

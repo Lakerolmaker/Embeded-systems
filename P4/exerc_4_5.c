@@ -1,4 +1,15 @@
-// code : 21917
+// ====================================
+// File name: exerc_4_5.c (or cpp)
+// Date: 2019-02-20
+// Group Number: 21
+// Members That contributed:
+// Jacob Olsson
+// Victor Roman
+// Members not present at the demonstration :
+// Xxxxxxx
+// Demonstration code: [<Ass code 21917> ]
+// ======================================
+
 #include <LiquidCrystal.h>
 
 LiquidCrystal lcd(13, 12, 11, 10, 9, 8);

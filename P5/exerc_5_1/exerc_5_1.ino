@@ -1,9 +1,9 @@
-/*==================================== 
+/*====================================
  * File name: exerc_5_1.ino
- * Date: 2018-02-23 
- * Group Number: 3 and 11 
- * Members That contributed: Kosara Golemshinska, Samer Daknache, Martin Chukaleski, Marko Stanoevich, Boyan Dai, Yazan Alsahhar
- * Demonstration code: [<37601>]        
+ * Date: 2019-02-26
+ * Group Number: 21 & 15
+ * Members That contributed: Jacob Olson, Victor Olsson, Jonatan Sundberg , Albin Gustafsson, Nuria Cara Navas
+ * Demonstration code: [<37601>]
  ======================================*/
 
 //       CA1 G  F  A  B
@@ -16,22 +16,9 @@
 //   |   D   |    |   D   |
 //   ---------    ---------
 //        |  |  |  |  |      -> pins and segments they control
-//        D  DP E  C CA2         
+//        D  DP E  C CA2
 
-// Segments that make each number when lit:
-// 0 => -FEDCBA
-// 1 => ----BC-
-// 2 => G-ED-BA
-// 3 => G--DCBA
-// 4 => GF--CB-
-// 5 => GF-DC-A
-// 6 => GFEDC-A
-// 7 => ----CBA
-// 8 => GFEDCBA
-// 9 => GF-DCBA
 
-// Arduino digital pins used to light up
-// corresponding segments on the LED display
 #define A 6
 #define B 8
 #define C 7
@@ -40,20 +27,16 @@
 #define F_SEG 4
 #define G 5
 
-// Pins driving common anodes
-#define CA1 13 //Cathode D1, pin 5
-#define CA2 12 //Cathode D2, pin 4
+#define CA1 13 
+#define CA2 12 
 
 #define OFF LOW
 #define ON HIGH
 
 // Pin for temperature reading
-const int S1 = 10;
+const int S1 = A5;
 
-// Variable for storing the temparature
-int temp;
-// Variable for storing raw data from the temperature sensor
-int val;
+
 // Variable for storing the maximum temperature
 int tempMAX = -100;
 
@@ -70,22 +53,48 @@ void setup() {
   pinMode(G, OUTPUT);
   pinMode(CA1, OUTPUT);
   pinMode(CA2, OUTPUT);
+  
+  pinMode(S1, INPUT);
 
-  analogReference(INTERNAL);
-  pinMode(S1, INPUT_PULLUP);
   Serial.begin(9600);
 }
 
-void loop() {
+int del = 6000; // fine adjustment for clock
+unsigned long time;
 
-  val = analogRead(10);
-  temp = val/ 10;
+ long timeNow = millis();
+ long timePassed = timeNow - time;
+
+void clearLEDS()  // clear the screen
+{
+  digitalWrite(A, LOW);
+  digitalWrite(B, LOW);
+  digitalWrite(C, LOW);
+  digitalWrite(D, LOW);
+  digitalWrite(E, LOW);
+  digitalWrite(F_SEG, LOW);
+  digitalWrite(G, LOW);
+  digitalWrite(CA1, LOW);
+  digitalWrite(CA2, LOW);
+  timePassed = millis();
+}
 
 
+int val = 0;
+void loop () {
+
+    val = analogRead(A5);
+    int temp = val * 0.48828125;
+    displaynumber(temp);
+    
     Serial.print("Current temperature is: ");
     Serial.println(temp);
+    
+}
 
-    if(temp >= -9 && temp < 0){
+void displaynumber(int temp){
+
+  if(temp >= -9 && temp < 0){
       selectSecondDigit();
       drawMinus();
       selectFirstDigit();
@@ -102,8 +111,8 @@ void loop() {
       delay(20);
       selectFirstDigit();
       drawNumber(temp%10);
-      delay(20);
     }
+  
 }
 
 // Selects the first digit
@@ -195,7 +204,7 @@ void drawNumber(int number){
         digitalWrite(F_SEG, ON);
         digitalWrite(G, ON);
         break;
-    case 7: 
+    case 7:
         digitalWrite(A, ON);
         digitalWrite(B, ON);
         digitalWrite(C, ON);

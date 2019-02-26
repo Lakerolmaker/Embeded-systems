@@ -1,6 +1,19 @@
+// ====================================
+// File name: exerc_4_1.c (or cpp)
+// Date: 2019-02-20
+// Group Number: 21
+// Members That contributed:
+// Jacob Olsson
+// Victor Roman
+// Members not present at the demonstration :
+// Xxxxxxx
+// Demonstration code: [<Ass code 7668> ]
+// ======================================
+
 // ------- Program skeleton for exerc 4.3 AT ----
 // ------- File skeleton_4_3_AT.txt ----------------
 //#include <avr/io.h>   Not needed
+
 #include <util/delay.h>
 
 #define REG8(x) *((unsigned char *) (x))     // A macro to use for IO R/W
