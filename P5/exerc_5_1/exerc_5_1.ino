@@ -1,5 +1,5 @@
 /* ====================================
-File name: exerc_5_1.ino 
+File name: exerc_5_1.ino
 Date: 2019-02-26
 Group Number:
 Members That contributed:
@@ -20,8 +20,8 @@ Demonstration code: [<Ass code 7037> ]
 #define F 4
 #define G 5
 
-#define CA1 13 
-#define CA2 12 
+#define CA1 13
+#define CA2 12
 
 #define D1 11
 #define D2 10
@@ -58,11 +58,11 @@ int temp = 0;
 int val = 0;
 int maxtemp = 0;
 void loop() {
-  
+
     if(timeHasPassed(500)){
        val = analogRead(A5);
        temp = val * 0.48828125;
-       
+
        if(temp > maxtemp){
         maxtemp = temp;
        }
@@ -104,14 +104,7 @@ int normalMode(){
 }
 
 void displayNumber(int temp){
-  if(temp >= -9 && temp < 0){
-      selectDigit(2);
-      drawMinus();
-      delay(1);
-      selectDigit(1);
-      displayDigit(temp*(-1));
-      delay(1);
-    }else if(temp>=0 && temp<10){
+    if(temp>=0 && temp<10){
       selectDigit(1);
       displayDigit(temp);
       delay(1000);
@@ -121,7 +114,7 @@ void displayNumber(int temp){
       delay(1);
       selectDigit(1);
       displayDigit(temp%10);
-      delay(1);   
+      delay(1);
     }
 }
 
@@ -134,18 +127,6 @@ void selectDigit(int digit){
     digitalWrite(CA2, HIGH);
   }
 }
-
-void drawMinus(){
-  selectDigit(2);
-  digitalWrite(A, LOW);
-  digitalWrite(B, LOW);
-  digitalWrite(C, LOW);
-  digitalWrite(D, LOW);
-  digitalWrite(E, LOW);
-  digitalWrite(F, LOW);
-  digitalWrite(G, HIGH);
-}
-
 
 void displayErr(){
   selectDigit(2);
@@ -179,7 +160,7 @@ void displayDigit(int number){
         digitalWrite(F, HIGH);
         digitalWrite(G, LOW);
     break;
-    case 1: 
+    case 1:
         digitalWrite(A, LOW);
         digitalWrite(B, HIGH);
         digitalWrite(C, HIGH);
@@ -224,7 +205,7 @@ void displayDigit(int number){
         digitalWrite(F, HIGH);
         digitalWrite(G, HIGH);
     break;
-    case 6: 
+    case 6:
         digitalWrite(A, HIGH);
         digitalWrite(B, LOW);
         digitalWrite(C, HIGH);
@@ -262,5 +243,3 @@ void displayDigit(int number){
     break;
   }
 }
-
-
