@@ -56,7 +56,17 @@ void setBit(int *bits, int index, int b){
 
 
 entry_state(void) {
-  setBit(&PORT, 8, BIT_CHECK(bits ,1))
+  while (statusPORT != "B00100000") {
+  setBit(&PORT, 7, BIT_CHECK(bits ,1);)
+}
+
+}
+
+read_state(void) {
+    do{   setBit(&PORT, 8, BIT_CHECK(bits ,1);) }
+  while (statusPORT == "B00000001" || statusPORT == "B00000010" )
+
+
 }
 
 int main (void)
