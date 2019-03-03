@@ -9,7 +9,8 @@
 #define BIT_CHECK(var,pos) (var >> pos) & 1
 #define EXIT_STATE end
 #define ENTRY_STATE entry
-#define PORT 0xB00
+#define statusPORT 0x0B00
+#define controlPORT 0x0B00
 
 
 *portopen = B10000000;
