@@ -53,6 +53,11 @@ void setBit(int *bits, int index, int b){
         BIT_CLEAR(*bits, index);
 }
 
+
+entry_state(void) {
+  setBit(&PORT, 8, BIT_CHECK(bits ,1))
+}
+
 int main (void)
 {
   enum state_codes cur_state = ENTRY_STATE;
