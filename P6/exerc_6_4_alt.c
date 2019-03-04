@@ -4,8 +4,8 @@
 #include <sys/time.h>
 #include <pthread.h>
 
-
-
+typedef enum {ERROR = -1, FALSE, TRUE} LOGICAL;
+int true = 1, false = 0;
 
 double get_time_ms(){
  struct timeval t;
@@ -13,51 +13,78 @@ double get_time_ms(){
  return (t.tv_sec + (t.tv_usec / 1000000.0)) * 1000.0;
 }
 
-double program_time = get_time_ms();
+int program_time;
 
-
-// ----- Tread functions –
-//--------------------------------------------
-void time_count() {
-  while (program_time < 50){
-
+clock_t previousMillis;
+int timeHasPassed(int milisecond){
+  if (get_time_ms() - previousMillis >= milisecond) {
+    previousMillis = get_time_ms();
+    return 1;
+  }else{
+    return 0;
   }
 }
 
-void read_inport(){
+void sleep(int milisecond){
+	 clock_t start_t = (clock() + (milisecond * CLOCKS_PER_SEC)/1000);
+   for(;;)
+		 if(clock() > start_t)
+		 	return;
+}
+
+void *read_inport(void *arg){
+  int previous_num;
   while (program_time<50){
+    if((program_time != previous_num) && (program_time % 5 == 0)){
+      previous_num = program_time;
+      printf("Reading inport now \n");
+    }
   }
+  pthread_exit("job's done");
 }
 
-void *thread(void *arg) {
-  char *ret;
-  printf("thread() entered with argument '%s'\n", arg);
-  if ((ret = (char*) malloc(20)) == NULL) {
-    perror("malloc() error");
-    exit(2);
+void *time_count(void *arg) {
+
+  while(program_time < 50){
+    if(timeHasPassed(1000)){
+      sleep(1000);
+      program_time++;
+    }
   }
-  strcpy(ret, "This is a test");
-  pthread_exit(ret);
+
+  pthread_exit("job's done");
 }
 
 
 int main(){
 
-    pthread_t thid;
+    previousMillis  = get_time_ms();
+
+    pthread_t thread1;
+    pthread_t thread2;
     void *ret;
 
-    if (pthread_create(&thid, NULL, thread, "thread 1") != 0) {
+    //: Creates the thread
+    if (pthread_create(&thread1, NULL, time_count, "arg 1") != 0) {
       perror("pthread_create() error");
       exit(1);
     }
 
-    if (pthread_join(thid, &ret) != 0) {
+    //: Creates the thread
+    if (pthread_create(&thread2, NULL, read_inport, "arg 2") != 0) {
       perror("pthread_create() error");
-      exit(3);
+      exit(1);
     }
 
-    printf("thread exited with '%s'\n", ret);
+    int previous_num;
+    while (program_time<50){
+      if(program_time != previous_num){
+        printf("Program time %d \n" , program_time);
+        previous_num = program_time;
+      }
+    }
 
- return 0;
+
+    exit(1);
 }
 // --- End of main thread ------
