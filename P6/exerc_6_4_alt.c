@@ -15,7 +15,7 @@ double get_time_ms(){
 
 int program_time;
 
-clock_t previousMillis;
+double previousMillis;
 int timeHasPassed(int milisecond){
   if (get_time_ms() - previousMillis >= milisecond) {
     previousMillis = get_time_ms();
@@ -26,10 +26,12 @@ int timeHasPassed(int milisecond){
 }
 
 void sleep(int milisecond){
-	 clock_t start_t = (clock() + (milisecond * CLOCKS_PER_SEC)/1000);
-   for(;;)
-		 if(clock() > start_t)
-		 	return;
+	 double stop_time = get_time_ms() + milisecond;
+   for(;;){
+     if(get_time_ms() >= stop_time){
+       return;
+     }
+   }
 }
 
 void *read_inport(void *arg){
@@ -47,8 +49,7 @@ void *time_count(void *arg) {
 
   while(program_time < 50){
     if(timeHasPassed(1000)){
-      sleep(1000);
-      program_time++;
+        program_time++;
     }
   }
 
