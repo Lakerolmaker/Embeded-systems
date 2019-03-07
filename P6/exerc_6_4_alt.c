@@ -1,19 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/time.h>
 #include <pthread.h>
 
 typedef enum {ERROR = -1, FALSE, TRUE} LOGICAL;
 int true = 1, false = 0;
 
+#include <sys/time.h>
 double get_time_ms(){
  struct timeval t;
  gettimeofday(&t, NULL);
  return (t.tv_sec + (t.tv_usec / 1000000.0)) * 1000.0;
 }
-
-int program_time;
 
 double previousMillis;
 int timeHasPassed(int milisecond){
@@ -33,6 +31,9 @@ void sleep(int milisecond){
      }
    }
 }
+
+int program_time;
+
 
 void *read_inport(void *arg){
   int previous_num;
@@ -88,4 +89,3 @@ int main(){
 
     exit(1);
 }
-// --- End of main thread ------
